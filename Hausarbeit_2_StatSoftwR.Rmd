@@ -62,7 +62,6 @@ n_times <- 10000
 outcome <- n_repeat_counting_head(n_times)
 
 four_head <- which(outcome == 4)
-four_head
 
 number_four_head <- length(four_head)
 number_four_head
@@ -116,7 +115,32 @@ plot(density(x))
 ```
 
 
-## 
+## Aufgabe 4
+
+
+```{r}
+library(ggplot2)
+vaccs <- readRDS("vaccs.Rds")
+```
+
+### a)
+```{r}
+vaccs_bayern <- subset(vaccs, region == "DE-BY")
+ggplot(data = vaccs) + 
+  geom_line(vaccs_bayern, 
+            mapping = aes(x = date, 
+                          y = dosen, 
+                          color = impfstoff))
+```
+
+
+### b) 
+
+
+
+### c) 
+
+
 
 ## R Markdown
 
