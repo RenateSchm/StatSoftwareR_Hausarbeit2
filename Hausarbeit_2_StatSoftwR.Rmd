@@ -74,6 +74,28 @@ probability_four_head
 
 ### c) 
 
+```{r}
+gain <- probability_four_head * (-50) + (1 - probability_four_head) * 1
+gain
+```
+
+### d)
+```{r}
+n_until_four_head <- function() {
+  
+  k <- 0
+  number_head <- -1
+  
+  while (number_head < 4) {
+    k <- k + 1
+    # print(k)
+    number_head <- count_head_throwing_coin_four_times()
+  }
+  return(k)
+}
+
+
+```
 
 ## R Markdown
 
