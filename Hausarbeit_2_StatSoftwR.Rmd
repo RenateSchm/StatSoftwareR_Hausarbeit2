@@ -89,13 +89,34 @@ n_until_four_head <- function() {
   while (number_head < 4) {
     k <- k + 1
     # print(k)
-    number_head <- count_head_throwing_coin_four_times()
+    number_head <- count_head_tossing_coin_four_times()
   }
   return(k)
 }
 
 
 ```
+
+### e)
+```{r}
+x <- vector(mode = "numeric", length = 100)
+for (i in seq_along(x)) {
+  x[i] <- n_until_four_head()
+}
+x
+
+mean(x)
+
+```
+
+### f) 
+
+```{r}
+plot(density(x))
+```
+
+
+## 
 
 ## R Markdown
 
