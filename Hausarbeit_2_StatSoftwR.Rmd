@@ -23,8 +23,9 @@ Bei dem angegebenen Code liegt eine Endlos-Schleife vor:
 set.seed(20210614)
 outcomes <- c("KOPF", "ZAHL")
 
+# This function simulates tossing a coin four times and counting the number of Heads ("KOPF") that appear. 
 
-count_head_throwing_coin_four_times <- function() {
+count_head_tossing_coin_four_times <- function() {
   
   number_head <- 0
   for (i in 1:4) {
@@ -39,6 +40,41 @@ count_head_throwing_coin_four_times <- function() {
 
 
 ### b) 
+```{r}
+# This function 
+n_repeat_counting_head <- function(n) {
+  
+  if (!is.numeric(n)) 
+    stop("Anzahl der Wiederholungen muss natürliche Zahl sein.")
+  if (n < 0)
+    stop("Negative Anzahl an Wiederholungen nicht sinnvoll.")
+  
+  outcome <- vector(mode = "double", length = n)
+  for (i in 1:n) {
+   outcome[i] <- count_head_tossing_coin_four_times()
+  }
+  
+  return(outcome)
+}
+
+
+n_times <- 10000
+outcome <- n_repeat_counting_head(n_times)
+
+four_head <- which(outcome == 4)
+four_head
+
+number_four_head <- length(four_head)
+number_four_head
+
+probability_four_head <- number_four_head / n_times
+probability_four_head
+
+```
+
+### c) 
+
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
