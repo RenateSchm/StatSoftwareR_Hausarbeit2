@@ -1,5 +1,5 @@
 ---
-title: "Hausarbeit2_StatSoftwR"
+title: "Hausarbeit 2"
 author: "Renate Schmeidler"
 date: "21 6 2021"
 output:
@@ -21,11 +21,21 @@ Bei dem angegebenen Code liegt eine Endlos-Schleife vor:
 ## Aufgabe 3
 
 ### a)
+Gesucht ist eine Funktion, die das viermalige einer Münze mit R simuliert und als Ergebniswert zurückgibt, wie oft dabei "KOPF" erschienen ist. 
 ```{r}
 set.seed(20210614)
 outcomes <- c("KOPF", "ZAHL")
 
-# This function simulates tossing a coin four times and counting the number of Heads ("KOPF") that appear. 
+# This function simulates tossing a coin four times 
+# and counts the number of Heads ("KOPF") that appear. 
+# Necessary for using this function: 
+# outcomes <- c("KOPF", "ZAHL") must be defined.
+
+# Arguments: 
+# No arguments for input. 
+# Returns:   A numeric vector of length 1 indicating
+#            the number of "KOPF" that appear during
+#            simulating tossing a coin 4 times.
 
 count_head_tossing_coin_four_times <- function() {
   
@@ -42,8 +52,17 @@ count_head_tossing_coin_four_times <- function() {
 
 
 ### b) 
+Gesucht ist eine Funktion, die die Funktion aus a) n-mal ausführt. 
 ```{r}
-# This function 
+# This function executes n simulations of 'tossing a coin 4 times'
+# and counts the number of "KOPF" for each simulation.
+#
+# Arguments:
+# n:       A numeric vector of length 1 indicating the number
+#          of repetitions of simulating 'tossing a coin 4 times'
+# Returns: A numeric vector of length n indicating the numbers 
+#          of "KOPF" in each of the n simulations.
+
 n_repeat_counting_head <- function(n) {
   
   if (!is.numeric(n)) 
@@ -58,11 +77,16 @@ n_repeat_counting_head <- function(n) {
   
   return(outcome)
 }
+```
 
-
+Diese Funktion soll nun mit n = 10000 aufgerufen und das Ergebnis in der Variablen outcome gespeichert werden. 
+```{r}
 n_times <- 10000
 outcome <- n_repeat_counting_head(n_times)
+```
 
+Damit kann ein Schätzwert für die Wahrscheinlichkeit des Ereignisses "Viermal 'KOPF' beim vierfachen Münzwurf berechnet werden. 
+```{r}
 four_head <- which(outcome == 4)
 
 number_four_head <- length(four_head)
@@ -70,7 +94,6 @@ number_four_head
 
 probability_four_head <- number_four_head / n_times
 probability_four_head
-
 ```
 
 ### c) 
