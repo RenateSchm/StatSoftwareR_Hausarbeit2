@@ -2,7 +2,9 @@
 title: "Hausarbeit2_StatSoftwR"
 author: "Renate Schmeidler"
 date: "20 6 2021"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -116,25 +118,90 @@ plot(density(x))
 
 
 ## Aufgabe 4
+In dieser Aufgabe sollen Daten aus dem Datensatz vaccs.Rds visualisiert werden.  
 
-
+Vorbereitende Schritte für die gesamte Aufgabe 4:  
+Laden des ggplot2-Pakets und Einlesen der Daten.
 ```{r}
 library(ggplot2)
 vaccs <- readRDS("vaccs.Rds")
 ```
 
-### a)
+### a) 
+Es soll ein Liniendiagramm erstellt werden, das den Fortschritt der Covid-Impfungen in Bayern, wie er sich aus den Daten ergibt, darstellt.  
+
+Vorbereitende Schritte: 
 ```{r}
-vaccs_bayern <- subset(vaccs, region == "DE-BY")
+# Erstellen eines Unterdatensatzes
+# mit den Daten für Bayern:
+vaccs_bayern_graph <- subset(vaccs, region == "DE-BY")
+vaccs_bayern_graph
+```
+Im Diagramm soll für jeden der Impfstoffe jeweils die Menge der verabreichten Dosen gegen die Zeit aufgetragen werden.   
+Dabei erscheinen in der Beschriftung des Diagramms die Bezeichnungen der vorkommenden Variablen.   
+```{r}
+# Überprüfung der Variablenbezeichungen
+str(vaccs_bayern_graph)
+levels(vaccs_bayern_graph$impfstoff)
+table(vaccs_bayern_graph$region)
+```
+Aus orthografischen Gründen und aus Gründen der besseren Lesbarkeit sind Umbenennungen zur Vorbereitung der Graphik sinnvoll.  
+
+Da die Benennungen der Variablen danach nicht mehr dem Advanced R Style genügen, erfolgt die Umbenennung ausschließlich in dem nur für die Erstellung der Graphik vorgesehenen Datensatz vaccs_bayern_graph.
+```{r}
+# Umbenennung von "DE-BY" zu "Bayern"
+vaccs_bayern_graph$region <- "Bayern"
+# oder
+levels(vaccs_bayern_graph$region)[levels(vaccs_bayern_graph$region) == "DE-BY"] <- "Bayern"
+```
+
+
+```{r}
+# Umbenennug der Faktoren von "impfstoff":
+
+
+# This function renames the levels of "impfstoff"
+rename_levels_impfstoff <- function(df_vaccs){
+  
+  levels(df_vaccs$impfstoff)[levels(df_vaccs$impfstoff) == "astra"] <- "Astrazeneca"
+  levels(df_vaccs$impfstoff)[levels(df_vaccs$impfstoff) == "comirnaty"] <- "Comirnaty"
+  levels(df_vaccs$impfstoff)[levels(df_vaccs$impfstoff) == "johnson"] <- "Johnson"
+  levels(df_vaccs$impfstoff)[levels(df_vaccs$impfstoff) == "moderna"] <- "Moderna"
+  
+  return(df_vaccs)
+}
+
+vaccs_bayern_graph <- rename_levels_impfstoff(vaccs_bayern_graph)
+vaccs_bayern_graph
+```
+
+
+```{r}
 ggplot(data = vaccs) + 
-  geom_line(vaccs_bayern, 
-            mapping = aes(x = date, 
-                          y = dosen, 
-                          color = impfstoff))
+  geom_line(vaccs_bayern_graph, mapping = aes(x = date, y = dosen, color = impfstoff)) + 
+  labs(title = "Covid-Impfungen Bayern", x = "Datum", y = "verabreichte Impfdosen", color = "Impfstoff")
 ```
 
 
 ### b) 
+In ähnlichen Liniendiagramm wie in a) für Bayern soll der Fortschritt der Covid-Impfungen im Saarland, in Bremen, Hessen und Berlin, wie er sich aus den Daten ergibt, darstellt werden.  
+
+Vorbereitende Schritte: 
+```{r}
+# Erstellen einese Unterdatensatzes
+# mit den Daten für das Saarland und für Bremen,
+# Hessen und Berlin:
+vaccs_select <- subset(vaccs, region %in% c("DE-SL", "DE-HB", "DE-HE", "DE-BE"))
+```
+
+
+```{r}
+ggplot(data = vaccs_select) + 
+  geom_line(mapping = aes(x = date, y = dosen, color = impfstoff)) + 
+  labs(title = "Covid-Impfungen in Berlin, Bremen, Hessen, Saarland", x = "Datum", y = "verabreichte Impfdosen", color = "Impfstoff") + 
+  facet_wrap(~ region, nrow = 2)
+
+```
 
 
 
