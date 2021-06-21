@@ -1,7 +1,7 @@
 ---
 title: "Hausarbeit2_StatSoftwR"
 author: "Renate Schmeidler"
-date: "20 6 2021"
+date: "21 6 2021"
 output:
   html_document: default
   pdf_document: default
@@ -210,11 +210,28 @@ ggplot(data = vaccs_select_graph) +
 
 ```
 
-
-
 ### c) 
 
+#### Vorbereitende Schritte
+```{r}
+vrel <- vaccs_select_graph
 
+vrel[vrel$region == "Berlin", ]$dosen <- vrel[vrel$region == "Berlin", ]$dosen / 3669491
+vrel[vrel$region == "Bremen", ]$dosen <- vrel[vrel$region == "Bremen", ]$dosen / 681202
+vrel[vrel$region == "Hessen", ]$dosen <- vrel[vrel$region == "Hessen", ]$dosen / 6288080
+vrel[vrel$region == "Saarland", ]$dosen <- vrel[vrel$region == "Saarland", ]$dosen / 986887
+```
+
+#### Erstellung der Graphik
+```{r}
+ggplot(data = vrel) + 
+  geom_line(mapping = aes(x = date, y = dosen, color = impfstoff)) + 
+  labs(title = "Covid-Impfungen in Berlin, Bremen, Hessen, Saarland", x = "Datum", y = "verabreichte Impfdosen", color = "Impfstoff") + 
+  scale_y_continuous(limits = c(0,1)) + 
+  facet_wrap(~ region, nrow = 2)
+
+
+```
 
 ## Quellenangaben
 
@@ -226,7 +243,10 @@ Für die Programmierung:
 
 - https://methodenlehre.github.io/einfuehrung-in-R/grafiken-mit-ggplot2.html
 - https://pandar.netlify.app/post/grafiken-mit-ggplot2/
+- http://www.cookbook-r.com/Manipulating_data/Renaming_levels_of_a_factor/
  
-Sowie   
-- für das Englische:
+Sowie  
+
+- https://de.wikipedia.org/wiki/Liste_der_deutschen_Bundesl%C3%A4nder_nach_Bev%C3%B6lkerung
+- für das Englische:   
   - https://www.linguee.de
