@@ -188,7 +188,6 @@ In ähnlichen Liniendiagramm wie in a) für Bayern soll der Fortschritt der Covi
 # mit den Daten für das Saarland und für Bremen,
 # Hessen und Berlin:
 vaccs_select_graph <- subset(vaccs, region %in% c("DE-SL", "DE-HB", "DE-HE", "DE-BE"))
-vaccs_select_graph
 ```
 Aus orthografischen Gründen und aus Gründen der besseren Lesbarkeit sind auch hier Umbenennungen zur Vorbereitung der Graphik sinnvoll. 
 ```{r}
@@ -200,7 +199,6 @@ levels(vaccs_select_graph$region)[levels(vaccs_select_graph$region) == "DE-BE"] 
 
 # Umbenennung der Levels von "impfstoff"
 vaccs_select_graph <- rename_levels_impfstoff(vaccs_select_graph)
-vaccs_select_graph
 ```
 
 #### Erstellung der Graphik
@@ -218,22 +216,17 @@ ggplot(data = vaccs_select_graph) +
 
 
 
-## R Markdown
+## Quellenangaben
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Für die Programmierung:   
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+- The Art of R Programming
+- R for Data Science (https://r4ds.had.co.nz/index.html)
+- Hilfefunktion von R
 
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+- https://methodenlehre.github.io/einfuehrung-in-R/grafiken-mit-ggplot2.html
+- https://pandar.netlify.app/post/grafiken-mit-ggplot2/
+ 
+Sowie   
+- für das Englische:
+  - https://www.linguee.de
